@@ -1,2 +1,2 @@
-Piotr Żuryński\
-Systemy sztucznej inteligencji, lab2: algorytmy ewolucyjne
+169544\
+Lab 2
