@@ -7,6 +7,7 @@ public partial class Form1 : Form
     NumericUpDown numTurniej;
     NumericUpDown numMutacja;
     NumericUpDown numIter;
+    TextBox txtRaport;
     public Form1()
     {
         InitializeComponent();
@@ -22,6 +23,11 @@ public partial class Form1 : Form
         numMutacja=new NumericUpDown{Left=220,Top=118,Width=80,DecimalPlaces=2,Increment=0.5m, Minimum=0.01m,Maximum=100,Value=10};
         Label lblIter=new Label{Text="Liczba iteracji:", Left=30,Top=150,AutoSize=true};
         numIter=new NumericUpDown{Left=220,Top=148,Width=80,Minimum=1,Maximum=1000,Value=20};
+        Button btnStart=new Button{Text="Start",Left=30,Top=190,Width=90,Height=30};
+        btnStart.Click+=btnStart_Click;
+        txtRaport=new TextBox{Left=30,Top=240,Width=430,Height=350,Multiline=true,ScrollBars=ScrollBars.Vertical};
+
+
 
         Controls.Add(lblMi);
         Controls.Add(numMi);
@@ -33,6 +39,17 @@ public partial class Form1 : Form
         Controls.Add(numMutacja);
         Controls.Add(lblIter);
         Controls.Add(numIter);
+        Controls.Add(btnStart);
+        Controls.Add(txtRaport);
 
+    }
+    void btnStart_Click(object? sender, EventArgs e){
+        int mi=(int)numMi.Value;
+        int lambda=(int)numLambda.Value;
+        int turniej=(int)numTurniej.Value;
+        double mutacja=(double)numMutacja.Value;
+        int iteracje=(int)numIter.Value;
+        txtRaport.Text="mi="+mi+" lambda="+lambda+" turniej="+turniej+" mutacja="+mutacja+Environment.NewLine;
+        txtRaport.Text+="iteracje="+iteracje+Environment.NewLine;
     }
 }
