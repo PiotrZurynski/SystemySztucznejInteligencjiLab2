@@ -51,5 +51,7 @@ public partial class Form1 : Form
         int iteracje=(int)numIter.Value;
         txtRaport.Text="mi="+mi+" lambda="+lambda+" turniej="+turniej+" mutacja="+mutacja+Environment.NewLine;
         txtRaport.Text+="iteracje="+iteracje+Environment.NewLine;
+
+        txtRaport.Text+="F(32,32)="+Stategia.oblicz(32,32)+Environment.NewLine;
     }
 }
