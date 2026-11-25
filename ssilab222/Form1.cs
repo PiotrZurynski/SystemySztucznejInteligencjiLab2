@@ -150,6 +150,8 @@ public partial class Form1 : Form
             txtRaport.Text+=j+"\t"+x1[j]+"\t"+x2[j]+"\t"+ocena[j]+Environment.NewLine;
         }
         }
+        txtRaport.Text+=Environment.NewLine+"Najlepsze rozwiązanie: x1="+x1[0]+" x2"+x2[0]+" F="+ocena[0]+Environment.NewLine;
+        
     }
     
 }
