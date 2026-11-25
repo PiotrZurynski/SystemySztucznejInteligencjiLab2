@@ -52,7 +52,10 @@ public partial class Form1 : Form
         int iteracje=(int)numIter.Value;
         txtRaport.Text="mi="+mi+" lambda="+lambda+" turniej="+turniej+" mutacja="+mutacja+Environment.NewLine;
         txtRaport.Text+="iteracje="+iteracje+Environment.NewLine;
-
+        if(turniej>mi){
+            MessageBox.Show("Rozmiar turnieju nie może być większy niż liczba rodziców.");
+            return;
+        }
         double[] x1=new double[mi];
         double[] x2=new double[mi];
         double[] ocena=new double[mi];
@@ -64,7 +67,92 @@ public partial class Form1 : Form
         txtRaport.Text+=Environment.NewLine+"Pula rodziców przed ewolucją"+Environment.NewLine;
         txtRaport.Text+="osobnik\tx1\tx2\tF"+Environment.NewLine;
         for(int j=0;j<mi;j++){
-            txtRaport.Text+=j+"\t"+x1[j]+"\t"+ocena[j]+Environment.NewLine;
+            txtRaport.Text+=j+"\t"+x1[j]+"\t"+x2[j]+"\t"+ocena[j]+Environment.NewLine;
+        }
+        
+        double[] p1=new double[lambda];
+        double[] p2=new double[lambda];
+        for(int k=0;k<lambda;k++){
+            bool[] wturnieju=new bool[mi];
+            int ile=0;
+            while(ile<turniej){
+                int kandydat=losuj.Next(mi);
+                if(wturnieju[kandydat]==false){
+                    wturnieju[kandydat]=true;
+                    ile++;
+                }
+            }
+            int zwyciezca=-1;
+            for(int j=0;j<mi;j++){
+                if(wturnieju[j]==true){
+                    if(zwyciezca==-1){
+                        zwyciezca=j;
+                    }
+                    if(ocena[j]>ocena[zwyciezca]){
+                        zwyciezca=j;
+                    }
+                }
+            }
+            p1[k]=x1[zwyciezca]+(losuj.NextDouble()*2-1)*mutacja;
+            p2[k]=x2[zwyciezca]+(losuj.NextDouble()*2-1)*mutacja;
+            if(p1[k]<0){
+                p1[k]=0;
+            }
+            if(p1[k]>100){
+                p1[k]=100;
+            }
+            if(p2[k]<0){
+                p2[k]=0;
+            }
+            if(p2[k]>100){
+                p2[k]=100;
+            }
+        }
+            txtRaport.Text+=Environment.NewLine+"Po turniejowi potomkowi"+Environment.NewLine;
+            txtRaport.Text+="potomek\tx1\tx2\tF"+Environment.NewLine;
+            for(int k=0;k<lambda;k++){
+                txtRaport.Text+=k+"\t"+p1[k]+"\t"+p2[k]+"\t"+Stategia.oblicz(p1[k],p2[k])+Environment.NewLine;
+            }
+        double[] w1=new double[mi+lambda];
+        double[] w2=new double[mi+lambda];
+        double[] wocena=new double[mi+lambda];
+        for(int j=0;j<mi;j++){
+            w1[j]=x1[j];
+            w2[j]=x2[j];
+            wocena[j]=ocena[j];
+        }
+        for(int k=0;k<lambda;k++){
+            w1[mi+k]=p1[k];
+            w2[mi+k]=p2[k];
+            wocena[mi+k]=Stategia.oblicz(p1[k],p2[k]);
+        }
+        for(int i=0;i<mi;i++){
+            int najl=i;
+            for(int j=i+1;j<mi+lambda;j++){
+                if(wocena[j]>wocena[najl]){
+                    najl=j;
+                }
+            }
+            double temp=w1[i];
+            w1[i]=w1[najl];
+            w1[najl]=temp;
+            temp=w2[i];
+            w2[i]=w2[najl];
+            w2[najl]=temp;
+            temp=wocena[i];
+            wocena[i]=wocena[najl];
+            wocena[najl]=temp;
+        }
+        for(int j=0;j<mi;j++){
+            x1[j]=w1[j];
+            x2[j]=w2[j];
+            ocena[j]=wocena[j];
+        }
+        txtRaport.Text+=Environment.NewLine+"Nowa pula"+Environment.NewLine;
+        txtRaport.Text+="osobnik\tx1\tx2\tF"+Environment.NewLine;
+        for(int j=0;j<mi;j++){
+            txtRaport.Text+=j+"\t"+x1[j]+"\t"+x2[j]+"\t"+ocena[j]+Environment.NewLine;
         }
     }
+    
 }
