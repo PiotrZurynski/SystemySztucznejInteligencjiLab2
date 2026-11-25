@@ -8,6 +8,7 @@ public partial class Form1 : Form
     NumericUpDown numMutacja;
     NumericUpDown numIter;
     TextBox txtRaport;
+    Random losuj=new Random();
     public Form1()
     {
         InitializeComponent();
@@ -52,6 +53,18 @@ public partial class Form1 : Form
         txtRaport.Text="mi="+mi+" lambda="+lambda+" turniej="+turniej+" mutacja="+mutacja+Environment.NewLine;
         txtRaport.Text+="iteracje="+iteracje+Environment.NewLine;
 
-        txtRaport.Text+="F(32,32)="+Stategia.oblicz(32,32)+Environment.NewLine;
+        double[] x1=new double[mi];
+        double[] x2=new double[mi];
+        double[] ocena=new double[mi];
+        for(int j=0;j<mi;j++){
+            x1[j]=losuj.NextDouble()*100;
+            x2[j]=losuj.NextDouble()*100;
+            ocena[j]=Stategia.oblicz(x1[j],x2[j]);
+        }
+        txtRaport.Text+=Environment.NewLine+"Pula rodziców przed ewolucją"+Environment.NewLine;
+        txtRaport.Text+="osobnik\tx1\tx2\tF"+Environment.NewLine;
+        for(int j=0;j<mi;j++){
+            txtRaport.Text+=j+"\t"+x1[j]+"\t"+ocena[j]+Environment.NewLine;
+        }
     }
 }
