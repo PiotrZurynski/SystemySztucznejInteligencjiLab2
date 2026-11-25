@@ -69,7 +69,7 @@ public partial class Form1 : Form
         for(int j=0;j<mi;j++){
             txtRaport.Text+=j+"\t"+x1[j]+"\t"+x2[j]+"\t"+ocena[j]+Environment.NewLine;
         }
-        
+        for(int it=1;it<=iteracje;it++){
         double[] p1=new double[lambda];
         double[] p2=new double[lambda];
         for(int k=0;k<lambda;k++){
@@ -108,11 +108,7 @@ public partial class Form1 : Form
                 p2[k]=100;
             }
         }
-            txtRaport.Text+=Environment.NewLine+"Po turniejowi potomkowi"+Environment.NewLine;
-            txtRaport.Text+="potomek\tx1\tx2\tF"+Environment.NewLine;
-            for(int k=0;k<lambda;k++){
-                txtRaport.Text+=k+"\t"+p1[k]+"\t"+p2[k]+"\t"+Stategia.oblicz(p1[k],p2[k])+Environment.NewLine;
-            }
+            
         double[] w1=new double[mi+lambda];
         double[] w2=new double[mi+lambda];
         double[] wocena=new double[mi+lambda];
@@ -148,10 +144,11 @@ public partial class Form1 : Form
             x2[j]=w2[j];
             ocena[j]=wocena[j];
         }
-        txtRaport.Text+=Environment.NewLine+"Nowa pula"+Environment.NewLine;
+        txtRaport.Text+=Environment.NewLine+"Iteracja:"+it+Environment.NewLine;
         txtRaport.Text+="osobnik\tx1\tx2\tF"+Environment.NewLine;
         for(int j=0;j<mi;j++){
             txtRaport.Text+=j+"\t"+x1[j]+"\t"+x2[j]+"\t"+ocena[j]+Environment.NewLine;
+        }
         }
     }
     
